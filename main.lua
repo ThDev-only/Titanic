@@ -1,5 +1,5 @@
 local Text = require("titanic.components.text.widget.text")
-local Color = require("titanic.components.color")
+local Color = require("titanic.color.color")
 
 local text
 
