@@ -1,7 +1,7 @@
 local Text = {}
 Text.__index = Text
 
-local Font = require("components.text.font")
+local Font = require("titanic.components.text.font")
 local text
 local _size
 local _font

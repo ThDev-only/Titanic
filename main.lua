@@ -1,5 +1,5 @@
-local Text = require("components.text.widget.text")
-local Color = require("components.color")
+local Text = require("titanic.components.text.widget.text")
+local Color = require("titanic.components.color")
 
 local text
 
@@ -25,7 +25,7 @@ end
 function love.draw()
     love.graphics.setBackgroundColor(0.8, 0.8, 1)
     text:draw()
-    
+
     print("okay")
 
     love.graphics.setColor(1, 0, 0)

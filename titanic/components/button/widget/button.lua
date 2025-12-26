@@ -1,7 +1,7 @@
 Button = {}
 Button.__index = Button
 
-local Text = require("components.text.widget.text")
+local Text = require("titanic.components.text.widget.text")
 local text
 local width, height
 local _background
