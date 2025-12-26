@@ -6,8 +6,8 @@ local text
 local _size
 local _font
 local width, height = 0, 0
-local color_rgb
-local background
+local _color_rgb
+local _background
 local x,y
 
 function Text:new(width, height, x, y)
@@ -48,13 +48,16 @@ function Text:font(font)
     love.graphics.setFont(love.graphics.newFont(self._font, self._size))
 end
 
-
-function Text:color_rgbb(r, g, b)
-    self.color_rgb = {r, g, b}
+function Text:color_rgb(r, g, b)
+    self._color_rgb = {r, g, b}
 end
 
-function Text:color(arr)
-    self.color_rgb = arr
+function Text:color(color)
+    self._color_rgb = color
+end
+
+function Text:background(color)
+    --to be implemented
 end
 
 function Text:coordinate(xPos, yPos)
@@ -67,6 +70,9 @@ function Text:coordinate(xPos, yPos)
 end
 
 function Text:align(orientation)
+    if not self.text then
+        error("No text set for centering")
+    end
     if orientation == "center" then
         self:center()
     elseif orientation == "center_horizontal" then
@@ -77,7 +83,7 @@ function Text:align(orientation)
 end
 
 function Text:draw()
-    love.graphics.setColor(self.color_rgb[1], self.color_rgb[2], self.color_rgb[3])
+    love.graphics.setColor(self._color_rgb[1], self._color_rgb[2], self._color_rgb[3])
     love.graphics.print(self.text, self.x, self.y)
     love.graphics.setColor(1,1,1)
 end

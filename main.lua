@@ -14,7 +14,7 @@ end
 
 function love.update(dt)
     text = Text:new(width,height)
-    text:value("Hello, World!")
+    text:value("Hello, Titanic")
     --text:align("center_horizontal")
     text:coordinate(20, 50)
     text:color(Color.black)
@@ -25,7 +25,7 @@ end
 function love.draw()
     love.graphics.setBackgroundColor(0.8, 0.8, 1)
     text:draw()
-    --love.graphics.print("Hello, World!", (width/2) - value.getW("Hello, World!"), 100)
+    
     print("okay")
 
     love.graphics.setColor(1, 0, 0)
