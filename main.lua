@@ -26,7 +26,7 @@ function love.update(dt)
     
     button = Button:new(screen)
     button:size(200, 100)
-    button:coordinate(400, 300)
+    button:align("center")
     button:text("Click Me!")
 
 end

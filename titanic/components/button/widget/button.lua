@@ -3,12 +3,14 @@ Button.__index = Button
 
 local Text = require("titanic.components.text.widget.text")
 local Screenport = require("titanic.screenport.screenport")
+local Color = require("titanic.color.color")
 
 local screen
 local container
 local _text
 local width, height
 local _background
+local _orientation
 
 function Button:new(screen, text, width, height, x, y)
     if not screen then
@@ -16,6 +18,7 @@ function Button:new(screen, text, width, height, x, y)
     end
 
     local obj = setmetatable({}, Button)
+    obj.screen = screen
     obj.width = width or 100
     obj.height = height or 50
 
@@ -49,19 +52,55 @@ function Button:coordinate(x, y)
     )
 end
 
+function Button:align(orientation)
+    if not orientation then
+        error("No orientation specified for alignment")
+    end
+    self._orientation = orientation
+
+    if orientation == "center_horizontal" then
+        self:center_horizontal()
+    elseif orientation == "center_vertical" then
+        self:center_vertical()
+    elseif orientation == "center" then
+        self:center()
+    end
+end
+
 function Button:text(value)
     self._text:value(value)
-    self._text:coordinate(
-        self.x + (self.width / 2) - (self._text and love.graphics.getFont():getWidth(self._text.text) or 0) / 2,
-        self.y + (self.height / 2) - (self._text and love.graphics.getFont():getHeight() or 0) / 2
-    )
+    self:ajust_text()
 end
 
 function Button:draw()
     --to be implemented
-    love.graphics.setColor(0.7, 0.7, 0.7)
+    love.graphics.setColor(Color.purple)
     love.graphics.rectangle("fill", self.x,  self.y, self.width, self.height)
     self._text:draw()
     love.graphics.setColor(0, 0, 0)
+end
+
+--local methods
+function Button:center_horizontal()
+    self.x = (self.screen:getWidth() / 2) - (self.width / 2)
+    self:ajust_text()
+end
+
+function Button:center_vertical()
+    self.y = (self.screen:getHeight() / 2) - (self.height / 2)
+    self:ajust_text()
+end
+
+function Button:center()
+    self.x = (self.screen:getWidth() / 2) - (self.width / 2)
+    self.y = (self.screen:getHeight() / 2) - (self.height / 2)
+    self:ajust_text()
+end
+
+function Button:ajust_text()
+    self._text:coordinate(
+        self.x + (self.width / 2) - (self._text and love.graphics.getFont():getWidth(self._text.text) or 0) / 2,
+        self.y + (self.height / 2) - (self._text and love.graphics.getFont():getHeight() or 0) / 2
+    )
 end
 return Button
