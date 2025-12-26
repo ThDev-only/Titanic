@@ -1,4 +1,4 @@
-# Titanic
+# Description
 An unofficial modern library made for creating layouts in love2d
 
 # Why use this?
