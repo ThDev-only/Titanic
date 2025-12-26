@@ -40,7 +40,7 @@ end
 
 function Text:size(sz)
     self._size = sz
-    love.graphics.setFont(self._font, sz)
+    love.graphics.setFont(love.graphics.newFont(self._font, sz))
 end
 
 function Text:font(font)
