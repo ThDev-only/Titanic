@@ -2,7 +2,11 @@ local Text = {}
 Text.__index = Text
 
 local Font = require("titanic.components.text.font")
+local Screenport = require("titanic.screenport.screenport")
+
+local screen
 local text
+local orientation
 local _size
 local _font
 local width, height = 0, 0
@@ -10,15 +14,13 @@ local _color_rgb
 local _background
 local x,y
 
-function Text:new(width, height, x, y)
-    if not width or not height then
-        error("Width and Height are required parameters")
+function Text:new(screen)
+    if not screen then
+        error("Screen is a required parameter")
     end
 
     local obj = setmetatable({}, Text)
-    obj.width = width
-    obj.height = height
-    obj.color_rgb = {1,1,1}
+    obj._color_rgb = {1,1,1}
     obj._size = 12
     obj._font = tostring(Font.inter)
     love.graphics.setFont(love.graphics.newFont(obj._font, obj._size))
@@ -45,7 +47,6 @@ end
 
 function Text:font(font)
     self._font = tostring(font)
-    love.graphics.setFont(love.graphics.newFont(self._font, self._size))
 end
 
 function Text:color_rgb(r, g, b)
@@ -70,6 +71,7 @@ function Text:coordinate(xPos, yPos)
 end
 
 function Text:align(orientation)
+    self.orientation = orientation
     if not self.text then
         error("No text set for centering")
     end
@@ -82,24 +84,35 @@ function Text:align(orientation)
     end
 end
 
+function Text:screenModified(screen)
+    self.screen = screen
+    self:resize()
+end
+
+function Text:resize()
+    --to be implemented]
+    self:align(self.orientation)
+end
 function Text:draw()
     love.graphics.setColor(self._color_rgb[1], self._color_rgb[2], self._color_rgb[3])
+    love.graphics.setFont(love.graphics.newFont(self._font, self._size))
     love.graphics.print(self.text, self.x, self.y)
+    love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
     love.graphics.setColor(1,1,1)
 end
 
 --local methods
 function Text:center()
-    self.x = (self.width / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
-    self.y = (self.height / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2
+    self.x = (self.screen.getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
+    self.y = (self.screen.getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2
 end
 
 function Text:center_horizontal()
-    self.x = (self.width / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
+    self.x = (self.screen.getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
     end
 
 function Text:right()
-    self.x = self.width - (self.text and love.graphics.getFont():getWidth(self.text) or 0)
+    self.x = self.screen.getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0)
 end
 
 return Text
