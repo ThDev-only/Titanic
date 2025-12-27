@@ -2,66 +2,63 @@ local Text = {}
 Text.__index = Text
 
 local Font = require("titanic.components.text.font")
-local Screenport = require("titanic.screenport.screenport")
+local Container = require("titanic.components.layout.container")
 
 local screen
 local text
 local orientation
-local _size
-local _font
-local width, height = 0, 0
-local _color_rgb
-local _background
+local size
+local font
+local color
+local background
 local x,y
 
-function Text:new(screen)
-    if not screen then
-        error("Screen is a required parameter")
+
+function Text:new(attrs)
+    --attrs = attrs or {}
+    if not attrs then
+        error("No attributes provided for Text widget")
     end
 
     local obj = setmetatable({}, Text)
-    obj._color_rgb = {1,1,1}
-    obj._size = 12
-    obj._font = tostring(Font.inter)
-    love.graphics.setFont(love.graphics.newFont(obj._font, obj._size))
 
-    if x and y then
-        obj.x = x
-        obj.y = y
-    else
-        obj.x = 0
-        obj.y = 0
-    end
+    obj.screen = attrs.screen
+    obj.text = tostring(attrs.text or "")
+    obj.size = attrs.size or 12 --for a moment
+    obj.color = attrs.color or Color.white --defalt value
+    obj.background = attrs.background or Color.black --default value
+    obj.font = tostring(attrs.font or Font.inter) --default font
+    obj.orientation = attrs.orientation or "center" --default orientation
+
+    obj.x = attrs.x or 0
+    obj.y = attrs.y or 0
 
     return obj
 end
 
-function Text:value(t)
+
+function Text:set_value(t)
     self.text = tostring(t)
 end
 
-function Text:size(sz)
-    self._size = sz
-    love.graphics.setFont(love.graphics.newFont(self._font, sz))
+function Text:set_size(sz)
+    self.size = sz
+    love.graphics.setFont(love.graphics.newFont(self.font, sz))
 end
 
-function Text:font(font)
-    self._font = tostring(font)
+function Text:set_font(font)
+    love.graphics.setFont(love.graphics.newFont(font, self._size))
 end
 
-function Text:color_rgb(r, g, b)
-    self._color_rgb = {r, g, b}
+function Text:set_color(color)
+    love.graphics.setColor(color[1], color[2], color[3])
 end
 
-function Text:color(color)
-    self._color_rgb = color
+function Text:set_background(color)
+    self.background = color
 end
 
-function Text:background(color)
-    --to be implemented
-end
-
-function Text:coordinate(xPos, yPos)
+function Text:set_coordinate(xPos, yPos)
     if xPos then
         self.x = xPos
     end
@@ -70,7 +67,7 @@ function Text:coordinate(xPos, yPos)
     end
 end
 
-function Text:align(orientation)
+function Text:set_align(orientation)
     self.orientation = orientation
     if not self.text then
         error("No text set for centering")
@@ -84,35 +81,29 @@ function Text:align(orientation)
     end
 end
 
-function Text:screenModified(screen)
-    self.screen = screen
-    self:resize()
-end
-
-function Text:resize()
-    --to be implemented]
-    self:align(self.orientation)
-end
-function Text:draw()
-    love.graphics.setColor(self._color_rgb[1], self._color_rgb[2], self._color_rgb[3])
-    love.graphics.setFont(love.graphics.newFont(self._font, self._size))
-    love.graphics.print(self.text, self.x, self.y)
-    love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
-    love.graphics.setColor(1,1,1)
-end
-
---local methods
 function Text:center()
-    self.x = (self.screen.getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
-    self.y = (self.screen.getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2
+    self.x = (self.screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
+    self.y = (self.screen:getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2
 end
 
 function Text:center_horizontal()
-    self.x = (self.screen.getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
+    self.x = (self.screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
     end
 
 function Text:right()
-    self.x = self.screen.getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0)
+    self.x = self.screen:getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0)
+end
+
+function Text:draw()
+    self:set_color(self.color)
+    self:set_font(self.font)
+    self:set_size(self.size)
+    self:set_background(self.background)
+    self:set_align(self.orientation)
+    love.graphics.print(self.text, self.x, self.y)
+    love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
+    love.graphics.setColor(1,1,1) --clear
+   
 end
 
 return Text
