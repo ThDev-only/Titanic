@@ -16,8 +16,8 @@ function love.load()
 end
 
 function love.update(dt)
+    screen:clear()
     text = Text:new({
-        screen = screen,
         text = "Hello, World!",
         size = 18,
         color = Color.black,
@@ -25,9 +25,11 @@ function love.update(dt)
         font = Font.inter,
         orientation = "center"
     })
+
+    screen:add(text)
 end
 
 function love.draw()
     love.graphics.setBackgroundColor(0.8, 0.8, 1)
-    text:draw()
+    screen:draw()
 end

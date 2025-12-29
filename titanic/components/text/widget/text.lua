@@ -21,8 +21,7 @@ function Text:new(attrs)
     end
 
     local obj = setmetatable({}, Text)
-
-    obj.screen = attrs.screen
+    
     obj.text = tostring(attrs.text or "")
     obj.size = attrs.size or 12 --for a moment
     obj.color = attrs.color or Color.white --defalt value
@@ -35,7 +34,6 @@ function Text:new(attrs)
 
     return obj
 end
-
 
 function Text:set_value(t)
     self.text = tostring(t)
@@ -94,7 +92,8 @@ function Text:right()
     self.x = self.screen:getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0)
 end
 
-function Text:draw()
+function Text:draw(screen)
+    self.screen = screen
     self:set_color(self.color)
     self:set_font(self.font)
     self:set_size(self.size)
