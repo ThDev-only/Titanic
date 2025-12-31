@@ -53,6 +53,7 @@ function Text:set_color(color)
 end
 
 function Text:set_background(color)
+    -- Not implemented yet
     self.background = color
 end
 

@@ -2,8 +2,7 @@ local Text = require("titanic.components.text.widget.text")
 local Button = require("titanic.components.button.widget.button")
 local Color = require("titanic.color.color")
 local Container = require("titanic.components.layout.container")
-
-local text
+local Gravity = require("titanic.components.layout.gravity")
 local screen
 
 function love.load()
@@ -17,7 +16,7 @@ end
 
 function love.update(dt)
     screen:clear()
-    text = Text:new({
+    local text = Text:new({
         text = "Hello, World!",
         size = 18,
         color = Color.black,
