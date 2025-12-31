@@ -13,6 +13,7 @@ local font
 local color
 local background
 local x,y
+local log
 
 
 function Text:new(attrs)
@@ -32,6 +33,7 @@ function Text:new(attrs)
 
     obj.x = attrs.x or 0
     obj.y = attrs.y or 0
+    obj.log = "created"
 
     return obj
 end
@@ -71,23 +73,10 @@ function Text:set_align(gravity)
       if not self.text then
         error("No text set for centering")
     end
-   
-    self.orientation = gravity
 
-    for _, v in pairs(self.orientation:get()) do
+    for _, v in ipairs(gravity.orientation) do
         self:apply_alignment(v)
     end
-end
-
-function Text:apply_alignment(orientation)
-    if orientation == "center" then
-        self:center()
-    elseif orientation == "center_horizontal" then
-        self:center_horizontal()
-    elseif orientation == "right" then
-        self:right()
-    end
-    
 end
 
 function Text:center()
@@ -103,6 +92,24 @@ function Text:right()
     self.x = self.screen:getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0)
 end
 
+function Text:apply_alignment(orientation)
+    self.log = self.log .. "\nApplying alignment: " .. orientation
+    if orientation == "center" then
+        self:center()
+    elseif orientation == "center_horizontal" then
+        self:center_horizontal()
+    elseif orientation == "right" then
+        self:right()
+    elseif orientation == "left" then
+        self.x = 0
+    elseif orientation == "top" then
+        self.y = 0
+    elseif orientation == "bottom" then
+        self.y = self.screen:getHeight() - (self.text and love.graphics.getFont():getHeight() or 0)
+    end
+    
+end
+
 function Text:draw(screen)
     self.screen = screen
     self:set_color(self.color)
@@ -113,6 +120,8 @@ function Text:draw(screen)
     love.graphics.print(self.text, self.x, self.y)
     love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
     love.graphics.setColor(1,1,1) --clear
+    love.graphics.print(self.log, 0, 0)
+
    
 end
 

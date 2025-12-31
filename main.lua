@@ -24,10 +24,10 @@ function love.update(dt)
         color = Color.black,
         background = Color.black,
         font = Font.inter,
-        orientation = "center"
+        orientation = Gravity:right():bottom()
     })
 
-    local btn = Button:new({
+    --[[[local btn = Button:new({
         text = {
             text = "Click Me",
             color = Color.white,
@@ -41,10 +41,10 @@ function love.update(dt)
         x = (screen:getWidth() - 150) / 2,
         y = (screen:getHeight() - 50) / 2,
         orientation = "bottom"
-    })
+    })]]
 
     screen:add(text)
-    screen:add(btn)
+    --screen:add(btn)
 end
 
 function love.draw()

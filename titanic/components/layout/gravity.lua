@@ -2,59 +2,56 @@ Gravity = {}
 Gravity.__index = Gravity
 
 local orientation = {}
-local obj
 
-function Gravity:right()
-    if not self.obj then
-        obj = setmetatable({}, Gravity)
-    end
-
-    obj.orientation[#obj.orientation+1] = "right"
-
-    return obj
+local function make(list)
+    return setmetatable(
+        { orientation = list or {} }
+    , Gravity)
 end
 
-function Gravity:bottom()
-    if not self.obj then
-        obj = setmetatable({}, Gravity)
+function Gravity:_and(value)
+    local new = {}
+    for i, v in ipairs(self.orientation) do
+        new[i] = v
     end
+    new[#new + 1] = value
 
-    obj.orientation[#obj.orientation+1] = "bottom"
-
-    return obj
-end
-
-function Gravity:center()
-    if not self.obj then
-        obj = setmetatable({}, Gravity)
-    end
-
-    obj.orientation[#obj.orientation+1] = "center"
-
-    return obj
-end
-
-function Gravity:left()
-    if not self.obj then
-        obj = setmetatable({}, Gravity)
-    end
-
-    obj.orientation[#obj.orientation+1] = "left"
-
-    return obj
+    return make(new)
 end
 
 function Gravity:top()
-    if not self.obj then
-        obj = setmetatable({}, Gravity)
+    if self == Gravity then
+        return make({"top"})
     end
-
-    obj.orientation[#obj.orientation+1] = "top"
-
-    return obj
+    return self:_and("top")
 end
 
-function Gravity:get()
-    return self.orientation
+function Gravity:bottom()
+    if self == Gravity then
+        return make({"bottom"})
+    end
+    return self:_and("bottom")
 end
+
+function Gravity:left()
+    if self == Gravity then
+        return make({"left"})
+    end
+    return self:_and("left")
+end
+
+function Gravity:right()
+    if self == Gravity then
+        return make({"right"})
+    end
+    return self:_and("right")
+end
+
+function Gravity:center()
+    if self == Gravity then
+        return make({"center"})
+    end
+    return self:_and("center")
+end
+
 return Gravity
