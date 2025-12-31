@@ -26,7 +26,24 @@ function love.update(dt)
         orientation = "center"
     })
 
+    local btn = Button:new({
+        text = {
+            text = "Click Me",
+            color = Color.white,
+            background = Color.black,
+            font = Font.inter,
+            orientation = "center"
+        },
+        background = Color.gray,
+        width = 150,
+        height = 50,
+        x = (screen:getWidth() - 150) / 2,
+        y = (screen:getHeight() - 50) / 2,
+        orientation = "bottom"
+    })
+
     screen:add(text)
+    screen:add(btn)
 end
 
 function love.draw()
