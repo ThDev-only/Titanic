@@ -13,7 +13,6 @@ local font
 local color
 local background
 local x,y
-local log
 
 
 function Text:new(attrs)
@@ -33,7 +32,6 @@ function Text:new(attrs)
 
     obj.x = attrs.x or 0
     obj.y = attrs.y or 0
-    obj.log = "created"
 
     return obj
 end
@@ -93,11 +91,12 @@ function Text:right()
 end
 
 function Text:apply_alignment(orientation)
-    self.log = self.log .. "\nApplying alignment: " .. orientation
     if orientation == "center" then
         self:center()
-    elseif orientation == "center_horizontal" then
+    elseif orientation == "center-horizontal" then
         self:center_horizontal()
+    elseif orientation == "center-vertical" then
+        self.y = (self.screen:getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2
     elseif orientation == "right" then
         self:right()
     elseif orientation == "left" then
@@ -120,8 +119,6 @@ function Text:draw(screen)
     love.graphics.print(self.text, self.x, self.y)
     love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
     love.graphics.setColor(1,1,1) --clear
-    love.graphics.print(self.log, 0, 0)
-
    
 end
 

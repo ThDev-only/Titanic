@@ -5,7 +5,7 @@ local Text = require("titanic.components.text.widget.text")
 local Font = require("titanic.components.text.font")
 local Color = require("titanic.color.color")
 local Container = require("titanic.components.layout.container")
-
+local Gravity = require("titanic.components.layout.gravity")
 local text
 local background
 local width, height
@@ -25,7 +25,7 @@ function Button:new(attrs)
         color = attrs.text.color or Color.white,
         background = attrs.text.background or Color.black,
         font = tostring(attrs.text.font or Font.inter),
-        orientation = attrs.text.orientation or "center",
+        orientation = attrs.text.orientation or Gravity:center(),
         x = attrs.text.x or 0,
         y = attrs.text.y or 0
     })
@@ -34,7 +34,7 @@ function Button:new(attrs)
     obj.height = attrs.height or 50
     obj.x = attrs.x or 0
     obj.y = attrs.y or 0
-    obj.orientation = attrs.orientation or "center"
+    obj.orientation = attrs.orientation or Gravity:center()
     obj.container_button = Container:new(obj.width, obj.height)
 
     obj.container_button:add(obj.text)
@@ -42,22 +42,25 @@ function Button:new(attrs)
     return obj
 end
 
-function Button:align(orientation)
-    self.orientation = orientation
-    if orientation == "center" then
-        self.x = (self.container_main:getWidth() - self.width) / 2
-        self.y = (self.container_main:getHeight() - self.height) / 2
-    elseif orientation == "center_horizontal" then
-        self.x = (self.container_main:getWidth() - self.width) / 2
-    elseif orientation == "left" then
-        self.x = 0
-    elseif orientation == "right" then
-        self.x = self.container_main:getWidth() - self.width
-    
-    elseif orientation == "top" then
-        self.y = 0
-    elseif orientation == "bottom" then
-        self.y = self.container_main:getHeight() - self.height
+function Button:align(gravity)
+    for i,v in ipairs(gravity.orientation) do
+        if v == "center" then
+            self.x = (self.container_main:getWidth() - self.width) / 2
+            self.y = (self.container_main:getHeight() - self.height) / 2
+
+        elseif v == "center-horizontal" then
+            self.x = (self.container_main:getWidth() - self.width) / 2
+        elseif v == "center-vertical" then
+            self.y = (self.container_main:getHeight() - self.height) / 2
+        elseif v == "top" then
+            self.y = 0
+        elseif v == "bottom" then
+            self.y = self.container_main:getHeight() - self.height
+        elseif v == "left" then
+            self.x = 0
+        elseif v == "right" then
+            self.x = self.container_main:getWidth() - self.width
+        end
     end
 end
 

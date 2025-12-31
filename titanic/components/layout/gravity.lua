@@ -54,4 +54,18 @@ function Gravity:center()
     return self:_and("center")
 end
 
+function Gravity:center_horizontal()
+    if self == Gravity then
+        return make({"center-horizontal"})
+    end
+    return self:_and("center-horizontal")
+end
+
+function Gravity:center_vertical()
+    if self == Gravity then
+        return make({"center-vertical"})
+    end
+    return self:_and("center-vertical")
+end
+
 return Gravity
