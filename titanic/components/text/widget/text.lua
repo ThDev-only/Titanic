@@ -3,6 +3,7 @@ Text.__index = Text
 
 local Font = require("titanic.components.text.font")
 local Container = require("titanic.components.layout.container")
+local Gravity = require("titanic.components.layout.gravity")
 
 local screen
 local text
@@ -66,11 +67,19 @@ function Text:set_coordinate(xPos, yPos)
     end
 end
 
-function Text:set_align(orientation)
-    self.orientation = orientation
-    if not self.text then
+function Text:set_align(gravity)
+      if not self.text then
         error("No text set for centering")
     end
+   
+    self.orientation = gravity
+
+    for _, v in pairs(self.orientation:get()) do
+        self:apply_alignment(v)
+    end
+end
+
+function Text:apply_alignment(orientation)
     if orientation == "center" then
         self:center()
     elseif orientation == "center_horizontal" then
@@ -78,6 +87,7 @@ function Text:set_align(orientation)
     elseif orientation == "right" then
         self:right()
     end
+    
 end
 
 function Text:center()

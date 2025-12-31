@@ -53,4 +53,8 @@ function Gravity:top()
 
     return obj
 end
+
+function Gravity:get()
+    return self.orientation
+end
 return Gravity
