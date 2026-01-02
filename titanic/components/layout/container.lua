@@ -46,9 +46,9 @@ end
 function Container:actionClick(x, y)
     -- Not implemented yet
     for _, widget in pairs(self.widgets) do
-        if widget.model == "component" and widget.actionClick then
+        --if widget.model == "component" then
             widget:actionClick(x, y)
-        end
+        --end
     end
 end
 

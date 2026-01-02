@@ -17,6 +17,7 @@ local button_style
 local container_main
 local container_button
 local model = "component"
+local clicked
 
 
 function Button:new(attrs)
@@ -31,6 +32,7 @@ function Button:new(attrs)
     obj.y = attrs.y or 0
     obj.orientation = attrs.orientation or Gravity:center()
     obj.container_button = Container:new(obj.width, obj.height)
+    obj.clicked = attrs.clicked or nil
 
     obj.text = Text:new({
         text = tostring(attrs.text.text or ""),
@@ -133,5 +135,11 @@ end
 
 function Button:actionClick(x, y)
     -- Not implemented yet
-end
+       if self.x <= x and x <= self.x + self.width and
+          self.y <= y and y <= self.y + self.height then
+           if self.clicked then
+               self.clicked()
+           end
+       end
+    end
 return Button

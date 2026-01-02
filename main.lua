@@ -45,7 +45,17 @@ function love.update(dt)
                 stroke_width = 0.5,
                 corners_radius = 10
             }
-        }
+        },
+        clicked = function()
+            screen:add(Text:new{
+                text = "Button Clicked!",
+                size = 16,
+                color = Color.red,
+                background = Color.black,
+                font = Font.inter,
+                orientation = Gravity:center_horizontal():bottom()
+            })
+        end
     })
 
     screen:add(text)
@@ -55,4 +65,10 @@ end
 function love.draw()
     love.graphics.setBackgroundColor(0.4, 0.4, 1)
     screen:draw()
+end
+
+function love.mousepressed(x, y, button, istouch, presses)
+    if button == 1 then
+        screen:actionClick(x, y)
+    end
 end

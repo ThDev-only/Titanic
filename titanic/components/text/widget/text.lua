@@ -14,6 +14,7 @@ local color
 local background
 local x,y
 local model = "component"
+local clicked
 
 function Text:new(attrs)
     --attrs = attrs or {}
@@ -29,6 +30,7 @@ function Text:new(attrs)
     obj.background = attrs.background or Color.black --default value
     obj.font = tostring(attrs.font or Font.inter) --default font
     obj.orientation = attrs.orientation or "center" --default orientation
+    obj.clicked = attrs.clicked or nil
 
     obj.x = attrs.x or 0
     obj.y = attrs.y or 0
@@ -127,6 +129,12 @@ end
 
 function Text:actionClick(x, y)
     -- Not implemented yet
+    if self.x <= x and x <= self.x + (self.text and love.graphics.getFont():getWidth(self.text) or 0) and
+       self.y <= y and y <= self.y + (self.text and love.graphics.getFont():getHeight() or 0) then
+        if self.clicked then
+            self.clicked()
+        end
+    end
 end
 
 return Text
