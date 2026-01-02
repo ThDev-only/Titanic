@@ -4,6 +4,8 @@ Container.__index = Container
 local resolution = {}
 local width, height
 local widgets = {}
+local model = "layout"
+
 
 function Container:new(w, h)
     local obj = setmetatable({}, Container)
@@ -38,6 +40,15 @@ end
 function Container:draw()
     for _, widget in pairs(self.widgets) do
         widget:draw(self)
+    end
+end
+
+function Container:actionClick(x, y)
+    -- Not implemented yet
+    for _, widget in pairs(self.widgets) do
+        if widget.model == "component" and widget.actionClick then
+            widget:actionClick(x, y)
+        end
     end
 end
 

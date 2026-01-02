@@ -13,7 +13,7 @@ local font
 local color
 local background
 local x,y
-
+local model = "component"
 
 function Text:new(attrs)
     --attrs = attrs or {}
@@ -123,6 +123,10 @@ function Text:draw(screen)
     love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
     love.graphics.setColor(1,1,1) --clear
    
+end
+
+function Text:actionClick(x, y)
+    -- Not implemented yet
 end
 
 return Text

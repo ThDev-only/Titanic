@@ -16,6 +16,8 @@ local button_style
 
 local container_main
 local container_button
+local model = "component"
+
 
 function Button:new(attrs)
     if not attrs then
@@ -127,6 +129,9 @@ function Button:draw(container)
     love.graphics.translate(self.x, self.y)
     self.container_button:draw()
     love.graphics.pop()
+end
 
+function Button:actionClick(x, y)
+    -- Not implemented yet
 end
 return Button
