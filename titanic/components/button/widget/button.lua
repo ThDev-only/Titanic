@@ -9,7 +9,6 @@ local Container = require("titanic.components.layout.container")
 local Gravity = require("titanic.components.layout.gravity")
 
 local text
-local background
 local width, height
 local x, y
 local orientation
@@ -24,7 +23,6 @@ function Button:new(attrs)
     end
     local obj = setmetatable({}, Button)
 
-    obj.background = attrs.background or {0.7, 0.7, 0.7}
     obj.width = attrs.width or 100
     obj.height = attrs.height or 50
     obj.x = attrs.x or 0
@@ -42,10 +40,10 @@ function Button:new(attrs)
         y = attrs.text.y or 0
     })
     obj.container_button:add(obj.text)
-
+    
     obj.button_style = ButtonStyle:new(attrs.style or {
         shadow = {},
-        style = {}
+        shape = {}
     })
 
     return obj
@@ -76,21 +74,55 @@ end
 function Button:set_shadow()
     love.graphics.setColor(self.button_style.color[1], self.button_style.color[2], self.button_style.color[3], self.button_style.color[4])
     --love.graphics.setLineWidth(1)
-    love.graphics.rectangle("fill", self.x - self.button_style.offset_x, self.y - self.button_style.offset_y, self.width + self.button_style.width, self.height + self.button_style.height)
+    love.graphics.rectangle(
+    "fill",
+    self.x - self.button_style.offset_x,
+    self.y - self.button_style.offset_y, 
+    self.width + self.button_style.width, 
+    self.height + self.button_style.height,
+    self.button_style.style_corners_radius,
+    self.button_style.style_corners_radius
+    )
     --love.graphics.rectangle("fill", 5, 5, love.graphics.getWidth() - 10, love.graphics.getHeight() - 10, 10, 10)
     love.graphics.setColor(1, 1, 1, 1)
 end
 
+function Button:set_shape()
+    love.graphics.setColor(self.button_style.style_stroke_color[1], self.button_style.style_stroke_color[2], self.button_style.style_stroke_color[3], self.button_style.style_stroke_color[4])
+    love.graphics.setLineWidth(self.button_style.style_stroke_width)
+    love.graphics.rectangle(
+    "line",
+    self.x,
+    self.y, 
+    self.width, 
+    self.height,
+    self.button_style.style_corners_radius,
+    self.button_style.style_corners_radius
+    )
+    love.graphics.setColor(1, 1, 1, 1)
+end
+
+function Button:draw_button()
+    love.graphics.setColor(self.button_style.style_background_color[1], self.button_style.style_background_color[2], self.button_style.style_background_color[3], self.button_style.style_background_color[4])
+    love.graphics.rectangle(
+       "fill",
+       self.x,
+       self.y,
+       self.width,
+       self.height,
+       self.button_style.style_corners_radius,
+       self.button_style.style_corners_radius
+    )
+
+    love.graphics.setColor(1, 1, 1, 1)
+end
 function Button:draw(container)
     self.container_main = container
     -- Draw button background
     self:align(self.orientation)
     self:set_shadow()
-    love.graphics.setColor(self.background[1], self.background[2], self.background[3])
-
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
-    love.graphics.setColor(self.background[1], self.background[2], self.background[3])
-
+    self:draw_button()
+    self:set_shape()
     love.graphics.push()
     love.graphics.translate(self.x, self.y)
     self.container_button:draw()

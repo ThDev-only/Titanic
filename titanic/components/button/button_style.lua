@@ -21,21 +21,29 @@ function ButtonStyle:new(attrs)
         error("No attributes provided for ButtonStyle")
     end
 
+    if not attrs.shadow then
+        attrs.shadow = {}
+    end
+
+    if not attrs.shape then
+        attrs.shape = {}
+    end
+
     local obj = setmetatable({}, ButtonStyle)
 
     --properties shadow
-    obj.width = attrs.shadow.width or 5
-    obj.height = attrs.shadow.height or 5
+    obj.width = attrs.shadow.width or 4
+    obj.height = attrs.shadow.height or 4
     obj.color = attrs.shadow.color or {0,0,0,0.2}
-    obj.offset_x = attrs.shadow.offset_x or 2.5
-    obj.offset_y = attrs.shadow.offset_y or 2.5
+    obj.offset_x = attrs.shadow.offset_x or 2
+    obj.offset_y = attrs.shadow.offset_y or 2
 
     --properties style
-    obj.style_background_color = attrs.style.color or Color.gray
-    obj.style_stroke_color = attrs.style.stroke_color or Color.transparent
-    obj.style_stroke_width = attrs.style.stroke_width or 0
-    obj.style_corners_radius = attrs.style.corners_radius or 0
-    
+    obj.style_background_color = attrs.shape.color or Color.gray
+    obj.style_stroke_color = attrs.shape.stroke_color or Color.transparent
+    obj.style_stroke_width = attrs.shape.stroke_width or 0
+    obj.style_corners_radius = attrs.shape.corners_radius or 0
+
     return obj
 end
 return ButtonStyle

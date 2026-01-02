@@ -31,14 +31,21 @@ function love.update(dt)
         text = {
             text = "Click Me",
             color = Color.white,
-            background = Color.black,
+            background = Color.black, -- not working, fix soon
             font = Font.inter,
             orientation = Gravity:center()
         },
-        background = Color.gray,
-        width = 150,
-        height = 50,
-        orientation = Gravity:center()
+        width = 100,
+        height = 40,
+        orientation = Gravity:center(),
+        style = {
+            shape = {
+                color = Color.blue,
+                stroke_color = Color.white,
+                stroke_width = 0.5,
+                corners_radius = 10
+            }
+        }
     })
 
     screen:add(text)
@@ -46,6 +53,6 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.setBackgroundColor(0.8, 0.8, 1)
+    love.graphics.setBackgroundColor(0.4, 0.4, 1)
     screen:draw()
 end
