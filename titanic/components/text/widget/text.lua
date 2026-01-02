@@ -33,6 +33,9 @@ function Text:new(attrs)
     obj.x = attrs.x or 0
     obj.y = attrs.y or 0
 
+    obj.x = math.floor(obj.x)
+    obj.y = math.floor(obj.y)
+
     return obj
 end
 
@@ -78,16 +81,16 @@ function Text:set_align(gravity)
 end
 
 function Text:center()
-    self.x = (self.screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
-    self.y = (self.screen:getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2
+    self.x = math.floor((self.screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2)
+    self.y = math.floor((self.screen:getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2)
 end
 
 function Text:center_horizontal()
-    self.x = (self.screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
+    self.x = math.floor(self.screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
     end
 
 function Text:right()
-    self.x = self.screen:getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0)
+    self.x = math.floor(self.screen:getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0))
 end
 
 function Text:apply_alignment(orientation)

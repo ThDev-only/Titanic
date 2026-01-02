@@ -36,8 +36,8 @@ function Button:new(attrs)
         background = attrs.text.background or Color.black,
         font = tostring(attrs.text.font or Font.inter),
         orientation = attrs.text.orientation or Gravity:center(),
-        x = attrs.text.x or 0,
-        y = attrs.text.y or 0
+        x = math.floor(attrs.text.x or 0),
+        y = math.floor(attrs.text.y or 0)
     })
     obj.container_button:add(obj.text)
     
@@ -52,21 +52,21 @@ end
 function Button:align(gravity)
     for i,v in ipairs(gravity.orientation) do
         if v == "center" then
-            self.x = (self.container_main:getWidth() - self.width) / 2
-            self.y = (self.container_main:getHeight() - self.height) / 2
+            self.x = math.floor((self.container_main:getWidth() - self.width) / 2)
+            self.y = math.floor((self.container_main:getHeight() - self.height) / 2)
 
         elseif v == "center-horizontal" then
-            self.x = (self.container_main:getWidth() - self.width) / 2
+            self.x = math.floor((self.container_main:getWidth() - self.width) / 2)
         elseif v == "center-vertical" then
-            self.y = (self.container_main:getHeight() - self.height) / 2
+            self.y = math.floor((self.container_main:getHeight() - self.height) / 2)
         elseif v == "top" then
-            self.y = 0
+            self.y = math.floor(0)
         elseif v == "bottom" then
-            self.y = self.container_main:getHeight() - self.height
+            self.y = math.floor(self.container_main:getHeight() - self.height)
         elseif v == "left" then
-            self.x = 0
+            self.x = math.floor(0)
         elseif v == "right" then
-            self.x = self.container_main:getWidth() - self.width
+            self.x = math.floor(self.container_main:getWidth() - self.width)
         end
     end
 end
@@ -76,12 +76,12 @@ function Button:set_shadow()
     --love.graphics.setLineWidth(1)
     love.graphics.rectangle(
     "fill",
-    self.x - self.button_style.offset_x,
-    self.y - self.button_style.offset_y, 
-    self.width + self.button_style.width, 
-    self.height + self.button_style.height,
-    self.button_style.style_corners_radius,
-    self.button_style.style_corners_radius
+    math.floor(self.x - self.button_style.offset_x),
+    math.floor(self.y - self.button_style.offset_y), 
+    math.floor(self.width + self.button_style.width), 
+    math.floor(self.height + self.button_style.height),
+    math.floor(self.button_style.style_corners_radius),
+    math.floor(self.button_style.style_corners_radius)
     )
     --love.graphics.rectangle("fill", 5, 5, love.graphics.getWidth() - 10, love.graphics.getHeight() - 10, 10, 10)
     love.graphics.setColor(1, 1, 1, 1)
