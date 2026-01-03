@@ -4,4 +4,4 @@ function View:new()
 
 end
 
-return View;
+return View
