@@ -4,8 +4,8 @@ local Color = require("titanic.color.color")
 local Container = require("titanic.components.layout.container")
 local Gravity = require("titanic.components.layout.gravity")
 
-
 local screen
+local count = 0
 
 function love.load()
     print("okay")
@@ -14,10 +14,7 @@ function love.load()
     local height = love.graphics.getHeight()
 
     screen = Container:new(width, height)
-end
 
-function love.update(dt)
-    screen:clear()
     local text = Text:new({
         text = "Hello, World!",
         size = 18,
@@ -47,8 +44,8 @@ function love.update(dt)
             }
         },
         clicked = function()
-            screen:add(Text:new{
-                text = "Button Clicked!",
+            screen:add("text_clicked", Text:new{
+                text = "Button Clicked: 0",
                 size = 16,
                 color = Color.red,
                 background = Color.black,
@@ -62,6 +59,11 @@ function love.update(dt)
     screen:add(btn)
 end
 
+function love.update(dt)
+   -- screen:clear()
+    
+end
+
 function love.draw()
     love.graphics.setBackgroundColor(0.4, 0.4, 1)
     screen:draw()
@@ -70,5 +72,11 @@ end
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
         screen:actionClick(x, y)
+
+        count = count + 1
+        --you can change the text value like this
+        screen:get("text_clicked").text = "Button Clicked: " .. count
+        --it's not appropriate to put this here
+        --it was only done as a presentation
     end
 end

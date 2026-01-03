@@ -32,9 +32,19 @@ function Container:clear()
     self.widgets = {}
 end
 
-function Container:add(widget)
+function Container:add(key, widget)
+    if type(key) == "string" then
+       self.widgets[key] = widget
+        return
+    end
+
+    widget = key --widget value
     self.widgets[#self.widgets + 1] = widget
 
+end
+
+function Container:get(key)
+    return self.widgets[key] or nil
 end
 
 function Container:draw()
