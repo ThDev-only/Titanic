@@ -121,7 +121,7 @@ function Text:draw(screen)
     self:set_size(self.size)
     self:set_background(self.background)
     self:set_align(self.orientation)
-    love.graphics.print(self.text, self.x, self.y)
+    love.graphics.print(self.text, math.floor(self.x), math.floor(self.y))
     love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
     love.graphics.setColor(1,1,1) --clear
    

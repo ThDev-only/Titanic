@@ -16,8 +16,8 @@ function love.load()
     screen = Container:new(width, height)
 
     local text = Text:new({
-        text = "Hello, World!",
-        size = 18,
+        text = "Titanic Demo Layout",
+        size = 24,
         color = Color.black,
         background = Color.black,
         font = Font.inter,
