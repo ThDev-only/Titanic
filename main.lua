@@ -44,8 +44,9 @@ function love.load()
             }
         },
         clicked = function()
+            count = count + 1
             screen:add("text_clicked", Text:new{
-                text = "Button Clicked: 0",
+                text = "Button Clicked: " .. count,
                 size = 16,
                 color = Color.red,
                 background = Color.black,
@@ -72,10 +73,8 @@ end
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
         screen:actionClick(x, y)
-
-        count = count + 1
         --you can change the text value like this
-        screen:get("text_clicked").text = "Button Clicked: " .. count
+        --screen:get("text_clicked").text = "Button Clicked: count"
         --it's not appropriate to put this here
         --it was only done as a presentation
     end
