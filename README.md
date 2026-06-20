@@ -1,12 +1,65 @@
-# Description
-An unofficial modern library made for creating layouts in love2d
+# Titanic
 
-# Demo (Alpha)
+A modern layout and UI library for Love2D.
 
-![photo](assets/screenshots/photo_2.png)
+## Overview
 
-# Why use this?
-I saw that most UI libraries for love2d are old and don't apply the modern layout concept, so I decided to do this
+Titanic is an open-source library designed to simplify user interface development in Love2D through modern layout concepts and reusable UI components.
 
-# Titanic?
-Well, I was thinking about what name to use, it had to be something that fit with love2d, I thought about love, then the name titanic came up, it's pretty obvious why so I won't explain that
+The project aims to provide a cleaner and more scalable approach to UI construction compared to traditional coordinate-based interfaces, making it easier to build responsive and maintainable applications.
+
+## Features
+
+* Modern layout system
+* Reusable UI components
+* Flexible alignment and positioning
+* Customizable styling
+* Lightweight and easy to integrate
+* Built specifically for Love2D
+
+## Demo
+
+![Titanic Demo](assets/screenshots/photo_2.png)
+
+## Quick Example
+
+```lua
+local Text = require("titanic.widgets.text")
+
+local text = Text:new({
+    text = "Titanic Demo Text",
+    size = 24,
+    color = Color.black,
+    background = Color.black,
+    font = Font.inter,
+    orientation = Gravity:center_horizontal()
+})
+```
+
+Additional examples can be found in the `demos/` directory.
+
+## Project Structure
+
+```text
+titanic/
+├── core/
+├── layouts/
+├── widgets/
+├── styles/
+├── graphics/
+└── assets/
+```
+
+## Goals
+
+Titanic is focused on bringing modern UI development concepts to the Love2D ecosystem while maintaining simplicity, flexibility, and performance.
+
+The long-term vision includes advanced layout containers, theming support, and a complete component-based UI architecture.
+
+## Status
+
+Titanic is currently in active development and should be considered experimental. APIs may change as the project evolves.
+
+## License
+
+This project is licensed under the Apache License.
