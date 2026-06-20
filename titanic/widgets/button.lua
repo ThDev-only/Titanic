@@ -1,12 +1,12 @@
 Button = {}
 Button.__index = Button
 
-local ButtonStyle = require("titanic.components.button.button_style")
-local Text = require("titanic.components.text.widget.text")
-local Font = require("titanic.components.text.font")
-local Color = require("titanic.color.color")
-local Container = require("titanic.components.layout.container")
-local Gravity = require("titanic.components.layout.gravity")
+local ButtonStyle = require("titanic.styles.button_style")
+local Text = require("titanic.widgets.text")
+local Font = require("titanic.graphics.font")
+local Color = require("titanic.graphics.color")
+local Container = require("titanic.layouts.container")
+local Gravity = require("titanic.layouts.gravity")
 
 local text
 local width, height

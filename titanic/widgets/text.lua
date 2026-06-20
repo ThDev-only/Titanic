@@ -1,9 +1,9 @@
 local Text = {}
 Text.__index = Text
 
-local Font = require("titanic.components.text.font")
-local Container = require("titanic.components.layout.container")
-local Gravity = require("titanic.components.layout.gravity")
+local Font = require("titanic.graphics.font")
+local Container = require("titanic.layouts.container")
+local Gravity = require("titanic.layouts.gravity")
 
 local screen
 local text

@@ -1,8 +1,8 @@
-local Text = require("titanic.components.text.widget.text")
-local Button = require("titanic.components.button.widget.button")
-local Color = require("titanic.color.color")
-local Container = require("titanic.components.layout.container")
-local Gravity = require("titanic.components.layout.gravity")
+local Text = require("titanic.widgets.text")
+local Button = require("titanic.widgets.button")
+local Color = require("titanic.graphics.color")
+local Container = require("titanic.layouts.container")
+local Gravity = require("titanic.layouts.gravity")
 
 local screen
 local count = 0

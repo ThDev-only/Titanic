@@ -1,7 +1,7 @@
 ButtonStyle = {}
 ButtonStyle.__index = ButtonStyle
 
-local Color = require("titanic.color.color")
+local Color = require("titanic.graphics.color")
 
 --properties shadow
 local shadow_width = 5
