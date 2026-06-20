@@ -45,7 +45,8 @@ function love.load()
         },
         clicked = function()
             count = count + 1
-            screen:add("text_clicked", Text:new{
+            if not screen:get("text_clicked") then
+                screen:add("text_clicked", Text:new{
                 text = "Button Clicked: " .. count,
                 size = 16,
                 color = Color.red,
@@ -53,6 +54,10 @@ function love.load()
                 font = Font.inter,
                 orientation = Gravity:center_horizontal():bottom()
             })
+            return
+            end
+            screen:get("text_clicked").text = "Button Clicked: " .. count
+            
         end
     })
 
