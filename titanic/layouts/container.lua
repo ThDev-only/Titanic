@@ -55,11 +55,20 @@ end
 
 function Container:actionClick(x, y)
     -- Not implemented yet
-    for _, widget in pairs(self.widgets) do
-        --if widget.model == "component" then
+     for key, widget in pairs(self.widgets) do
+    print("KEY:", key)
+        print("TYPE:", type(widget))
+
+        for k, v in pairs(widget) do
+            print(" ", k, v)
+        end
+
+        print("width =", widget.width)
+        print("height =", widget.height)
+ --if widget.model == "component" then
+        if widget.clicked then
             if widget.x <= x and x <= widget.x + widget.width and
           widget.y <= y and y <= widget.y + widget.height then
-           if widget.clicked then
                widget.clicked()
            end
        end

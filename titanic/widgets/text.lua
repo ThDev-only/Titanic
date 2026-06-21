@@ -39,8 +39,8 @@ function Text:new(attrs)
     obj.x = math.floor(obj.x)
     obj.y = math.floor(obj.y)
 
-    obj.width = (self.text and love.graphics.getFont():getWidth(self.text)) or nil
-    obj.height = (self.text and love.graphics.getFont():getHeight() or nil)
+    obj.width = (self.text and love.graphics.getFont():getWidth(self.text)) or 100
+    obj.height = (self.text and love.graphics.getFont():getHeight() or 100)
     return obj
 end
 

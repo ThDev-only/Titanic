@@ -7,16 +7,17 @@ local Font = require("titanic.graphics.font")
 local Color = require("titanic.graphics.color")
 local Container = require("titanic.layouts.container")
 local Gravity = require("titanic.layouts.gravity")
+local Widget = require("titanic.core.widget")
+
+setmetatable(Button, {
+    __index = Widget
+})
 
 local text
-local width, height
-local x, y
-local orientation
 local button_style
-
+local orientation
 local container_main
 local container_button
-local model = "component"
 local clicked
 
 
@@ -24,12 +25,8 @@ function Button:new(attrs)
     if not attrs then
         error("No attributes provided for Button widget")
     end
-    local obj = setmetatable({}, Button)
-
-    obj.width = attrs.width or 100
-    obj.height = attrs.height or 50
-    obj.x = attrs.x or 0
-    obj.y = attrs.y or 0
+    local obj = Widget.new(self, attrs)
+    
     obj.orientation = attrs.orientation or Gravity:center()
     obj.container_button = Container:new(obj.width, obj.height)
     obj.clicked = attrs.clicked or nil
