@@ -18,10 +18,14 @@ function love.load()
     local text = Text:new({
         text = "Titanic Demo Layout",
         size = 24,
-        color = Color.black,
-        background = Color.black,
+        color = Color.white,
+        background = Color.transparent,
         font = Font.inter,
-        orientation = Gravity:center_horizontal()
+        orientation = Gravity:center_horizontal(),
+        y = 50,
+        clicked = function()
+                screen:get("title").text = "OK, you clicked me!"
+            end
     })
 
     local btn = Button:new({
@@ -49,10 +53,10 @@ function love.load()
                 screen:add("text_clicked", Text:new{
                 text = "Button Clicked: " .. count,
                 size = 16,
-                color = Color.red,
+                color = Color.white,
                 background = Color.black,
                 font = Font.inter,
-                orientation = Gravity:center_horizontal():bottom()
+                orientation = Gravity:center_horizontal():bottom(),
             })
             return
             end
@@ -61,7 +65,7 @@ function love.load()
         end
     })
 
-    screen:add(text)
+    screen:add("title", text)
     screen:add(btn)
 end
 
@@ -71,7 +75,7 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.setBackgroundColor(0.4, 0.4, 1)
+    love.graphics.setBackgroundColor(0, 0, 0.2)
     screen:draw()
 end
 

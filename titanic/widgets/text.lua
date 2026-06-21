@@ -4,16 +4,17 @@ Text.__index = Text
 local Font = require("titanic.graphics.font")
 local Container = require("titanic.layouts.container")
 local Gravity = require("titanic.layouts.gravity")
+local Widget = require("titanic.core.widget")
+
+setmetatable(Text, {
+    __index = Widget
+})
 
 local screen
 local text
-local orientation
 local size
 local font
 local color
-local background
-local x,y
-local model = "component"
 local clicked
 
 function Text:new(attrs)
@@ -22,7 +23,7 @@ function Text:new(attrs)
         error("No attributes provided for Text widget")
     end
 
-    local obj = setmetatable({}, Text)
+    local obj = Widget.new(self, attrs)
     
     obj.text = tostring(attrs.text or "")
     obj.size = attrs.size or 12 --for a moment
@@ -38,6 +39,8 @@ function Text:new(attrs)
     obj.x = math.floor(obj.x)
     obj.y = math.floor(obj.y)
 
+    obj.width = (self.text and love.graphics.getFont():getWidth(self.text)) or nil
+    obj.height = (self.text and love.graphics.getFont():getHeight() or nil)
     return obj
 end
 
@@ -56,6 +59,14 @@ end
 
 function Text:set_color(color)
     love.graphics.setColor(color[1], color[2], color[3])
+end
+
+function Text:set_width(w)
+    self.width = w
+end
+
+function Text:set_height(h)
+    self.height = h
 end
 
 function Text:set_background(color)
@@ -121,6 +132,8 @@ function Text:draw(screen)
     self:set_size(self.size)
     self:set_background(self.background)
     self:set_align(self.orientation)
+    self:set_width(self.text and love.graphics.getFont():getWidth(self.text) or nil)
+    self:set_height(self.text and love.graphics.getFont():getHeight() or nil)
     love.graphics.print(self.text, math.floor(self.x), math.floor(self.y))
     love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
     love.graphics.setColor(1,1,1) --clear

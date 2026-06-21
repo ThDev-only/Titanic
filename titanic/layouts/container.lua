@@ -57,7 +57,12 @@ function Container:actionClick(x, y)
     -- Not implemented yet
     for _, widget in pairs(self.widgets) do
         --if widget.model == "component" then
-            widget:actionClick(x, y)
+            if widget.x <= x and x <= widget.x + widget.width and
+          widget.y <= y and y <= widget.y + widget.height then
+           if widget.clicked then
+               widget.clicked()
+           end
+       end
         --end
     end
 end

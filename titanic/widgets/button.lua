@@ -133,13 +133,4 @@ function Button:draw(container)
     love.graphics.pop()
 end
 
-function Button:actionClick(x, y)
-    -- Not implemented yet
-       if self.x <= x and x <= self.x + self.width and
-          self.y <= y and y <= self.y + self.height then
-           if self.clicked then
-               self.clicked()
-           end
-       end
-    end
 return Button
