@@ -70,8 +70,6 @@ function love.load()
 end
 
 function love.update(dt)
-   -- screen:clear()
-    
 end
 
 function love.draw()
