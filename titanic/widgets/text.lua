@@ -2,20 +2,12 @@ local Text = {}
 Text.__index = Text
 
 local Font = require("titanic.graphics.font")
-local Container = require("titanic.layouts.container")
-local Gravity = require("titanic.layouts.gravity")
 local Widget = require("titanic.core.widget")
+local Gravity = require("titanic.layouts.gravity")
 
 setmetatable(Text, {
     __index = Widget
 })
-
-local screen
-local text
-local size
-local font
-local color
-local clicked
 
 function Text:new(attrs)
     --attrs = attrs or {}
@@ -28,16 +20,9 @@ function Text:new(attrs)
     obj.text = tostring(attrs.text or "")
     obj.size = attrs.size or 12 --for a moment
     obj.color = attrs.color or Color.white --defalt value
-    obj.background = attrs.background or Color.black --default value
+    obj.background = attrs.background or Color.transparent --default value
     obj.font = tostring(attrs.font or Font.inter) --default font
-    obj.orientation = attrs.orientation or "center" --default orientation
-    obj.clicked = attrs.clicked or nil
-
-    obj.x = attrs.x or 0
-    obj.y = attrs.y or 0
-
-    obj.x = math.floor(obj.x)
-    obj.y = math.floor(obj.y)
+    obj.orientation = attrs.orientation or Gravity:left() --default orientation
 
     obj.width = (self.text and love.graphics.getFont():getWidth(self.text)) or 100
     obj.height = (self.text and love.graphics.getFont():getHeight() or 100)
@@ -69,71 +54,74 @@ function Text:set_height(h)
     self.height = h
 end
 
-function Text:set_background(color)
-    -- Not implemented yet
-    self.background = color
-end
-
-function Text:set_coordinate(xPos, yPos)
-    if xPos then
-        self.x = xPos
-    end
-    if yPos then
-        self.y = yPos
-    end
-end
-
-function Text:set_align(gravity)
+function Text:set_align(screen, gravity)
       if not self.text then
         error("No text set for centering")
     end
 
     for _, v in ipairs(gravity.orientation) do
-        self:apply_alignment(v)
+        self:apply_alignment(screen, v)
     end
 end
 
-function Text:center()
-    self.x = math.floor((self.screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2)
-    self.y = math.floor((self.screen:getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2)
+function Text:left(screen)
+    self.x = math.floor(0)
 end
 
-function Text:center_horizontal()
-    self.x = math.floor(self.screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
+function Text:center_horizontal(screen)
+    self.x = math.floor(screen:getWidth() / 2) - (self.text and love.graphics.getFont():getWidth(self.text) or 0) / 2
     end
 
-function Text:right()
-    self.x = math.floor(self.screen:getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0))
+function Text:right(screen)
+    self.x = math.floor(screen:getWidth() - (self.text and love.graphics.getFont():getWidth(self.text) or 0))
 end
 
-function Text:apply_alignment(orientation)
+function Text:top(screen)
+    self.y = math.floor(0)
+end
+
+function Text:center_vertical(screen)
+    self.y = math.floor(screen:getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2
+end
+
+function Text:bottom(screen)
+    self.y = math.floor(screen:getHeight() - (self.text and love.graphics.getFont():getHeight() or 0))
+end
+
+function Text:center(screen)
+    self:center_horizontal(screen)
+    self:center_vertical(screen)
+end
+
+function Text:apply_alignment(screen, orientation)
     if orientation == "center" then
-        self:center()
+        self:center(screen)
     elseif orientation == "center-horizontal" then
-        self:center_horizontal()
+        self:center_horizontal(screen)
     elseif orientation == "center-vertical" then
-        self.y = (self.screen:getHeight() / 2) - (self.text and love.graphics.getFont():getHeight() or 0) / 2
+        self:center_vertical(screen)
     elseif orientation == "right" then
-        self:right()
+        self:right(screen)
     elseif orientation == "left" then
-        self.x = 0
+        self:left(screen)
     elseif orientation == "top" then
-        self.y = 0
+        self:top(screen)
     elseif orientation == "bottom" then
-        self.y = self.screen:getHeight() - (self.text and love.graphics.getFont():getHeight() or 0)
-    end
-    
+        self:bottom(screen)
+        end    
 end
 
 function Text:draw(screen)
-    self.screen = screen
+
+    print("Container:", screen:getWidth(), screen:getHeight())
     self:set_color(self.color)
     self:set_font(self.font)
     self:set_size(self.size)
     self:set_background(self.background)
-    self:set_align(self.orientation)
     self:set_width(self.text and love.graphics.getFont():getWidth(self.text) or nil)
     self:set_height(self.text and love.graphics.getFont():getHeight() or nil)
+ 
+    self:set_align(screen, self.orientation)
     love.graphics.print(self.text, math.floor(self.x), math.floor(self.y))
     love.graphics.setFont(love.graphics.newFont(12)) -- for a moment
     love.graphics.setColor(1,1,1) --clear

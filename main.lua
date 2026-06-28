@@ -1,3 +1,4 @@
+if os.getenv("LOVE2D_TOOLS") then pcall(require, "_love2d_tools_bridge") end
 local Text = require("titanic.widgets.text")
 local Button = require("titanic.widgets.button")
 local Color = require("titanic.graphics.color")
@@ -34,7 +35,7 @@ function love.load()
             color = Color.white,
             background = Color.black, -- not working, fix soon
             font = Font.inter,
-            orientation = Gravity:center()
+            --orientation = Gravity:center()
         },
         width = 100,
         height = 40,

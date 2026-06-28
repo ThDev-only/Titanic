@@ -19,7 +19,7 @@ The project aims to provide a cleaner and more scalable approach to UI construct
 
 ## Demo
 
-![Titanic Demo](assets/screenshots/photo_2.png)
+![Titanic Demo](assets/screenshots/photo_3.png)
 
 ## Quick Example
 
